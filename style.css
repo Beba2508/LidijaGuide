@@ -194,6 +194,13 @@ a:hover { color: var(--accent); }
   border: 1px solid var(--border);
   margin: 16px 0 24px;
 }
+/* Hero panorama effect – full width while content stays centered */
+.hero {
+  width: 100vw; /* full screen width */
+  margin-left: calc(-50vw + 50%); /* centers it */
+  border-left: none;
+  border-right: none;
+}
 .hero img {
   position: absolute;
   inset: 0;
