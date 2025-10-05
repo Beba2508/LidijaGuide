@@ -416,4 +416,61 @@ ul { list-style: disc; margin-left: 20px; }
 .tip-content li a:hover {
   color: var(--accent);
 }
+/* ---------- Villa Guide Enhancements ---------- */
+.guide-hero {
+  width: 100%;
+  height: auto;
+  margin: 12px 0 16px;
+  border: 1px solid var(--border);
+}
+
+.quick-tips {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  margin-bottom: 20px;
+}
+@media (min-width: 600px) {
+  .quick-tips { grid-template-columns: repeat(3, 1fr); }
+}
+.quick-tips .tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  font-size: 14px;
+}
+.quick-tips i {
+  color: var(--accent-dark);
+  width: 18px;
+  height: 18px;
+}
+
+.guide-photo {
+  width: 100%;
+  max-width: 240px;
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-light);
+  color: var(--text);
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.guide-link:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
 
