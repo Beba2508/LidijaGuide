@@ -80,29 +80,29 @@ ${data.get("notes") || ""}`
   /* ---------- Dynamic Footer Year ---------- */
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+  
+  /* ---------- Mobile Horizontal Tab Scroll (with fades & hint) ---------- */
+  const tabContainer = document.querySelector(".tabs");
+  if (tabContainer) {
+    // ostavi postojeći stil iz CSS-a — ne postavljamo više inline stilove
 
-/* ---------- Mobile Horizontal Tab Scroll (with fades & hint) ---------- */
-const tabContainer = document.querySelector(".tabs");
-if (tabContainer) {
-  // ostavi postojeći stil iz CSS-a — ne postavljamo više inline stilove
+    const updateTabShadows = () => {
+      const maxScroll = tabContainer.scrollWidth - tabContainer.clientWidth;
+      const scrolled = tabContainer.scrollLeft > 2;
+      const atEnd = tabContainer.scrollLeft >= maxScroll - 2;
 
-  const updateTabShadows = () => {
-    const maxScroll = tabContainer.scrollWidth - tabContainer.clientWidth;
-    const scrolled = tabContainer.scrollLeft > 2;
-    const atEnd = tabContainer.scrollLeft >= maxScroll - 2;
+      tabContainer.classList.toggle("is-scrolled", scrolled);
+      tabContainer.classList.toggle("is-end", atEnd);
+    };
 
-    tabContainer.classList.toggle("is-scrolled", scrolled);
-    tabContainer.classList.toggle("is-end", atEnd);
-  };
+    // inicijalno stanje (nakon što se fontovi/ikone učitaju)
+    requestAnimationFrame(updateTabShadows);
 
-  // inicijalno stanje (nakon što se fontovi/ikone učitaju)
-  requestAnimationFrame(updateTabShadows);
+    // slušaj skrol
+    tabContainer.addEventListener("scroll", updateTabShadows, { passive: true });
 
-  // slušaj skrol
-  tabContainer.addEventListener("scroll", updateTabShadows, { passive: true });
-
-  // također ažuriraj na resize (promjena orijentacije, iOS toolbar itd.)
-  window.addEventListener("resize", updateTabShadows);
-}
+    // također ažuriraj na resize (promjena orijentacije, iOS toolbar itd.)
+    window.addEventListener("resize", updateTabShadows);
+  }
 
 });
