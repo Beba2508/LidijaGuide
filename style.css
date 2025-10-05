@@ -88,11 +88,76 @@ a:hover { color: var(--accent); }
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
+  position: relative; /* omogućuje pseudo-elemente ::before/::after */
+
   padding-bottom: 6px;
 }
 .tabs::-webkit-scrollbar {
   display: none;
 }
+/* Desni fade koji sugerira da ima još tabova udesno */
+.tabs::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 44px;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to left, var(--background) 60%, transparent);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+/* Na desktopu ne treba hint */
+@media (min-width: 801px) {
+  .tabs::after { display: none; }
+}
+/* Početni scroll hint: "Swipe →" koji nestane, a nakon prvog scrolla postaje lijevi fade */
+.tabs::before {
+  content: "Swipe →";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  padding: 4px 8px;
+  background: rgba(0,0,0,0.08);
+  color: #333;
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 1;
+  animation: nudgeOut 2.8s ease-out 1 forwards;
+}
+
+@keyframes nudgeOut {
+  0%   { transform: translateY(-50%) translateX(0);   opacity: 1; }
+  20%  { transform: translateY(-50%) translateX(8px); opacity: 1; }
+  40%  { transform: translateY(-50%) translateX(0);   opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Kad korisnik malo skrola, klasa .is-scrolled preusmjerava ::before u lijevi fade */
+.tabs.is-scrolled::before {
+  content: "";
+  left: 0;
+  right: auto;
+  top: 0;
+  transform: none;
+  width: 44px;
+  height: 100%;
+  background: linear-gradient(to right, var(--background) 60%, transparent);
+  border-radius: 0;
+  padding: 0;
+  animation: none;
+  opacity: 1;
+}
+
+/* Kad smo do kraja desno, ugasi desni fade */
+.tabs.is-end::after {
+  opacity: 0;
+}
+
 .tab-btn {
   flex: 0 0 auto; /* Prevent wrapping */
   appearance: none;
