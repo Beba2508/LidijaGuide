@@ -32,6 +32,11 @@ h1, h2, h3 {
   color: var(--text);
   margin-bottom: 0.5rem;
 }
+/* dodatni razmak za sekcijske naslove */
+h2 {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
 p, li { margin-bottom: 0.75rem; }
 a {
   color: var(--accent-dark);
@@ -45,7 +50,11 @@ a:hover { color: var(--accent); }
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ---------- Header ---------- */
@@ -195,6 +204,8 @@ a:hover { color: var(--accent); }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center; /* centriraj sliku unutar okvira */
+
 }
 .hero-overlay {
   position: relative;
@@ -229,6 +240,38 @@ main { padding: 8px 0 60px; }
   background: var(--white);
   border: 1px solid var(--border);
   padding: 16px;
+}
+/* ---------- Arrival Info Spacing ---------- */
+.card h3 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card ul {
+  margin-bottom: 20px;
+}
+
+.map-embed {
+  margin: 16px 0 24px;
+  border: 1px solid var(--border);
+  height: 250px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.arrival-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--accent-light);
+  color: #333;
+  padding: 12px;
+  font-size: 14px;
+  margin-top: 24px;
+  border: 1px solid var(--accent);
 }
 .grid-2 {
   display: grid;
