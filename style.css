@@ -81,40 +81,35 @@ a:hover { color: var(--accent); }
 }
 /* ---------- Tabs Navigation ---------- */
 .tabs {
+  position: relative;
   display: flex;
   gap: 4px;
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 6px;
 }
-.tabs::-webkit-scrollbar {
-  display: none;
+.tabs::-webkit-scrollbar { 
+  display: none; 
 }
-.tab-btn {
-  flex: 0 0 auto; /* Prevent wrapping */
-  appearance: none;
-  background: var(--white);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 8px 12px;
-  font-weight: 600;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  scroll-snap-align: start;
+
+/* Subtle fade effect on the right side to hint scroll */
+.tabs::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to left, var(--background) 65%, transparent);
 }
-.tab-btn:hover { border-color: var(--accent-light); color: var(--accent-dark); }
-.tab-btn[aria-selected="true"] {
-  background: var(--accent);
-  color: #fff;
-  border-color: transparent;
+
+/* Hide the fade on larger screens */
+@media (min-width: 801px) {
+  .tabs::after { display: none; }
 }
+
 /* ---------- Hero Section ---------- */
 .hero {
   position: relative;
