@@ -1,0 +1,284 @@
+/* =========================================
+   Majestic Villa Lidija – style.css
+   Mobile-first, flat & minimal design
+   ========================================= */
+
+/* ---------- Root Palette ---------- */
+:root {
+  --background: #f5f3ef;
+  --text: #1a1a1a;
+  --accent: #a8b9a2;      /* Sage */
+  --accent-light: #c5d1c0;
+  --accent-dark: #7d8e77;
+  --border: #e5e5dc;
+  --white: #ffffff;
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.55;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+p, li { margin-bottom: 0.75rem; }
+a {
+  color: var(--accent-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover { color: var(--accent); }
+
+/* ---------- Containers ---------- */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand img {
+  height: 28px;
+  width: auto;
+}
+.brand-name {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Tabs Navigation ---------- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tab-btn {
+  appearance: none;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.tab-btn:hover { border-color: var(--accent-light); color: var(--accent-dark); }
+.tab-btn[aria-selected="true"] {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ---------- Hero Section ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  min-height: 320px;
+  border: 1px solid var(--border);
+  margin: 16px 0 24px;
+}
+.hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 100%);
+  color: #fff;
+  padding: 24px;
+}
+.hero-title {
+  font-size: clamp(26px, 5vw, 42px);
+  line-height: 1.1;
+}
+.hero-sub { opacity: 0.9; max-width: 700px; }
+
+/* ---------- Main & Tabs ---------- */
+main { padding: 8px 0 60px; }
+.tab-panel {
+  display: none;
+  animation: fade 0.3s ease;
+}
+.tab-panel.active { display: block; }
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Cards & Grids ---------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 800px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Icon Rows ---------- */
+.icon-row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+.item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  padding: 10px;
+  background: var(--white);
+}
+.icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-light);
+  display: grid;
+  place-items: center;
+}
+.icon svg { width: 18px; height: 18px; color: var(--accent-dark); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+.btn:hover { background: var(--accent-dark); }
+
+/* ---------- Arrival Photos ---------- */
+.arrival-photos {
+  margin: 16px 0;
+}
+.photo-card {
+  border: 1px solid var(--border);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.photo-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.photo-card .caption {
+  padding: 6px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ---------- Accordion ---------- */
+.accordion { display: grid; gap: 8px; }
+.acc-item { border: 1px solid var(--border); background: var(--white); }
+.acc-head {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.acc-head:hover { background: var(--accent-light); }
+.acc-content {
+  display: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #333;
+}
+.acc-item.open .acc-content { display: block; }
+
+/* ---------- Form ---------- */
+form {
+  display: grid;
+  gap: 12px;
+}
+label span {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+input, select, textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 10px;
+  font: inherit;
+  background: var(--white);
+}
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ---------- Lists ---------- */
+ul { list-style: disc; margin-left: 20px; }
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+}
