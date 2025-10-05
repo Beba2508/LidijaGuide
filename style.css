@@ -472,5 +472,48 @@ ul { list-style: disc; margin-left: 20px; }
   background: var(--accent);
   color: #fff;
 }
+/* ---------- Arrival Info Enhancements ---------- */
+.map-embed {
+  border: 1px solid var(--border);
+  margin: 10px 0 20px;
+  width: 100%;
+  height: 240px;
+}
+.map-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
 
+.arrival-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  margin-top: 20px;
+  color: var(--text);
+}
+.arrival-tip i {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-dark);
+  flex-shrink: 0;
+}
+.arrival-tip p {
+  margin: 0;
+  font-size: 14px;
+}
+
+#tab-arrival h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#tab-arrival h3 i {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-dark);
+}
 
