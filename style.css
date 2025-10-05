@@ -358,3 +358,62 @@ ul { list-style: disc; margin-left: 20px; }
   color: #444;
   text-align: center;
 }
+/* ---------- Local Tips Cards ---------- */
+.tips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+@media (min-width: 800px) {
+  .tips-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.tip-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  /* no border-radius = sharp look */
+}
+
+.tip-card i {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: var(--accent-dark);
+}
+
+.tip-content h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-family: 'Playfair Display', serif;
+}
+
+.tip-content p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.tip-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tip-content li a {
+  display: block;
+  padding: 4px 0;
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+.tip-content li a:hover {
+  color: var(--accent);
+}
+
