@@ -224,9 +224,21 @@ a:hover { color: var(--accent); }
   line-height: 1.1;
 }
 .hero-sub { opacity: 0.9; max-width: 700px; }
+/* ---------- Content Padding (below Hero) ---------- */
+main {
+  padding: 60px 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+  main {
+    padding: 24px 20px;
+  }
+}
+
 
 /* ---------- Main & Tabs ---------- */
-main { padding: 8px 0 60px; }
 .tab-panel {
   display: none;
   animation: fade 0.3s ease;
