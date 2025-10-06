@@ -562,4 +562,25 @@ ul { list-style: disc; margin-left: 20px; }
   height: 18px;
   color: var(--accent-dark);
 }
+.lang-switch {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.lang-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.lang-btn:hover {
+  background: var(--accent-light);
+}
 
