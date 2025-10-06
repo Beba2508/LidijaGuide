@@ -190,7 +190,7 @@ a:hover { color: var(--accent); }
   position: relative;
   overflow: hidden;
   display: grid;
-  min-height: 320px;
+    min-height: clamp(360px, 45vh, 560px);
   border: 1px solid var(--border);
   margin: 16px 0 24px;
 }
