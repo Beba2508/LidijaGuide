@@ -299,5 +299,13 @@ document.querySelectorAll(".lang-btn").forEach(btn => {
 
 // Load saved language
 setLanguage(localStorage.getItem("villaLang") || "en");
+  /* ---------- Header shadow on scroll ---------- */
+  const header = document.querySelector(".header");
+  const toggleHeaderShadow = () => {
+    if (!header) return;
+    header.classList.toggle("shadow", window.scrollY > 12);
+  };
+  toggleHeaderShadow();
+  window.addEventListener("scroll", toggleHeaderShadow, { passive: true });
 
 });
