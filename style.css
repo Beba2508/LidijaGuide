@@ -95,7 +95,7 @@ a:hover { color: var(--accent); }
   scroll-snap-type: x mandatory;
   position: relative; /* omogućuje pseudo-elemente ::before/::after */
 
-  padding-bottom: 6px;
+  padding-bottom: 14px;
 }
 .tabs::-webkit-scrollbar {
   display: none;
@@ -117,13 +117,13 @@ a:hover { color: var(--accent); }
 @media (min-width: 801px) {
   .tabs::after { display: none; }
 }
-/* Početni scroll hint: "Swipe →" koji nestane, a nakon prvog scrolla postaje lijevi fade */
+/* Početni scroll hint: "Swipe →" koji nestane, postavljen ispod tabova */
 .tabs::before {
   content: "Swipe →";
   position: absolute;
   right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 6px;        /* bilo: top: 50% */
+  transform: none;    /* više ne centriramo po Y osi */
   font-size: 12px;
   padding: 4px 8px;
   background: rgba(0,0,0,0.08);
@@ -131,7 +131,7 @@ a:hover { color: var(--accent); }
   border-radius: 12px;
   pointer-events: none;
   opacity: 1;
-  animation: nudgeOut 2.8s ease-out 1 forwards;
+  animation: nudgeOut 1.6s ease-out 1 forwards; /* brže nestajanje */
 }
 
 @keyframes nudgeOut {
@@ -595,4 +595,11 @@ ul { list-style: disc; margin-left: 20px; }
 .lang-btn:hover {
   background: var(--accent-light);
 }
+/* Sjena headera na scroll */
+.header.shadow {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: rgba(245, 243, 239, 0.95);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+
 
