@@ -179,6 +179,9 @@ a:hover { color: var(--accent); }
   transition: all 0.2s ease;
   scroll-snap-align: start;
 }
+.tab-btn span {
+  white-space: nowrap;
+}
 .tab-btn:hover { border-color: var(--accent-light); color: var(--accent-dark); }
 .tab-btn[aria-selected="true"] {
   background: var(--accent);
