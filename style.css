@@ -1,17 +1,21 @@
 /* =========================================
-   Villa Guide - Improved Mobile-First CSS
+   Majestic Villa Lidija — style.css
+   Mobile-first, flat & minimal design
+   IMPROVED VERSION - All fixes included
    ========================================= */
 
+/* ---------- Root Palette ---------- */
 :root {
   --background: #f5f3ef;
   --text: #1a1a1a;
-  --accent: #a8b9a2;
+  --accent: #a8b9a2;      /* Sage */
   --accent-light: #c5d1c0;
   --accent-dark: #7d8e77;
   --border: #e5e5dc;
   --white: #ffffff;
 }
 
+/* ---------- Base ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body {
@@ -41,6 +45,7 @@ a {
 }
 a:hover { color: var(--accent); }
 
+/* ---------- Containers ---------- */
 .container {
   width: 100%;
   max-width: 1100px;
@@ -49,16 +54,14 @@ a:hover { color: var(--accent); }
   padding-right: 20px;
 }
 
-/* ========================================= */
-/* HEADER & NAVIGATION */
-/* ========================================= */
+/* ---------- Header ---------- */
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
   background: var(--background);
   border-bottom: 1px solid var(--border);
-  transition: box-shadow 0.3s;
+  transition: all 0.3s;
 }
 
 .header.shadow {
@@ -76,6 +79,8 @@ a:hover { color: var(--accent); }
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .brand {
@@ -83,12 +88,10 @@ a:hover { color: var(--accent); }
   align-items: center;
   gap: 10px;
 }
-
 .brand img {
   height: 32px;
   width: auto;
 }
-
 .brand-name {
   font-weight: 700;
   letter-spacing: 0.3px;
@@ -160,7 +163,7 @@ a:hover { color: var(--accent); }
   letter-spacing: 0.5px;
 }
 
-/* Pulsing animation for first visit */
+/* Pulsing animation */
 .menu-toggle:not(.seen) {
   animation: pulse-hint 2s ease-in-out 3;
   animation-delay: 0.5s;
@@ -177,13 +180,15 @@ a:hover { color: var(--accent); }
   }
 }
 
-/* Tabs Navigation */
+/* ---------- Tabs Navigation ---------- */
 .tabs {
   display: flex;
   gap: 4px;
   overflow-x: auto;
+  white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
   padding-bottom: 8px;
 }
 
@@ -209,6 +214,10 @@ a:hover { color: var(--accent); }
   gap: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  scroll-snap-align: start;
+}
+
+.tab-btn span {
   white-space: nowrap;
 }
 
@@ -228,10 +237,12 @@ a:hover { color: var(--accent); }
   height: 18px;
 }
 
-/* ========================================= */
-/* MOBILE STYLES */
-/* ========================================= */
+/* Mobile Hamburger Menu */
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
   .tabs {
     position: fixed;
     top: 0;
@@ -252,7 +263,7 @@ a:hover { color: var(--accent); }
     transform: translateX(0);
   }
 
-  /* DODAJ backdrop prije menija */
+  /* Backdrop */
   .tabs::before {
     content: '';
     position: fixed;
@@ -297,22 +308,33 @@ a:hover { color: var(--accent); }
     font-size: 16px;
     border-radius: 8px;
   }
+
+  .tab-btn i {
+    width: 22px;
+    height: 22px;
+  }
 }
 
-/* ========================================= */
-/* HERO SECTION */
-/* ========================================= */
+/* ---------- Hero Section FIXED ---------- */
 .hero {
   position: relative;
   overflow: hidden;
-  display: grid;
-  min-height: clamp(360px, 45vh, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(420px, 60vh, 700px);
   border: 1px solid var(--border);
   margin: 16px 0 24px;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   border-left: none;
   border-right: none;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: clamp(360px, 50vh, 500px);
+  }
 }
 
 .hero img {
@@ -325,47 +347,53 @@ a:hover { color: var(--accent); }
 }
 
 .hero-overlay {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
   display: flex;
-  align-items: flex-end;
-  background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 100%);
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
   color: #fff;
   padding: 24px;
+  max-width: 900px;
 }
 
 .hero-title {
-  font-size: clamp(26px, 5vw, 42px);
+  font-size: clamp(28px, 6vw, 52px);
   line-height: 1.1;
+  margin-bottom: 12px;
 }
 
 .hero-sub { 
-  opacity: 0.9; 
-  max-width: 700px; 
+  opacity: 0.95; 
+  font-size: clamp(16px, 2.5vw, 22px);
+  margin-bottom: 40px;
 }
 
-/* Scroll Hint */
+/* Scroll Hint - FIXED */
 .scroll-hint {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: white;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   animation: bounce 2s ease-in-out infinite;
-  z-index: 3;
   transition: opacity 0.3s;
+  margin-top: 20px;
 }
 
 .scroll-hint i {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 }
 
 .scroll-hint.hidden {
@@ -374,13 +402,11 @@ a:hover { color: var(--accent); }
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(10px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
 
-/* ========================================= */
-/* MAIN CONTENT */
-/* ========================================= */
+/* ---------- Content Padding ---------- */
 main {
   padding: 60px 60px 40px;
   max-width: 1200px;
@@ -389,27 +415,23 @@ main {
 
 @media (max-width: 800px) {
   main {
-    padding: 24px 20px 100px; /* Extra bottom padding for floating button */
+    padding: 24px 20px 100px;
   }
 }
 
+/* ---------- Main & Tabs ---------- */
 .tab-panel {
   display: none;
   animation: fade 0.3s ease;
 }
-
-.tab-panel.active { 
-  display: block; 
-}
+.tab-panel.active { display: block; }
 
 @keyframes fade {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
 }
 
-/* ========================================= */
-/* QUICK START SECTION */
-/* ========================================= */
+/* ---------- Quick Start Section - NO EMOJIS ---------- */
 .quick-start {
   background: linear-gradient(135deg, var(--accent-light) 0%, #d4dfd0 100%);
   padding: 24px;
@@ -477,9 +499,7 @@ main {
   font-weight: 400;
 }
 
-/* ========================================= */
-/* FLOATING HELP BUTTON */
-/* ========================================= */
+/* ---------- Floating Help Button ---------- */
 .floating-help {
   position: fixed;
   bottom: 24px;
@@ -537,9 +557,7 @@ main {
   }
 }
 
-/* ========================================= */
-/* HELP POPUP */
-/* ========================================= */
+/* ---------- Help Popup ---------- */
 .help-popup {
   position: fixed;
   inset: 0;
@@ -653,16 +671,68 @@ main {
   font-weight: 400;
 }
 
-/* ========================================= */
-/* OTHER COMPONENTS */
-/* ========================================= */
+/* ---------- Cards & Grids ---------- */
 .card {
   background: var(--white);
   border: 1px solid var(--border);
-  padding: 20px;
+  padding: 16px;
+}
+
+.card h3 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card ul {
   margin-bottom: 20px;
 }
 
+.map-embed {
+  margin: 16px 0 24px;
+  border: 1px solid var(--border);
+  height: 250px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.map-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.arrival-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--accent-light);
+  color: #333;
+  padding: 12px;
+  font-size: 14px;
+  margin-top: 24px;
+  border: 1px solid var(--accent);
+}
+
+.arrival-tip i {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-dark);
+  flex-shrink: 0;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 800px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Icon Rows ---------- */
 .icon-row {
   display: grid;
   gap: 12px;
@@ -672,61 +742,237 @@ main {
 
 .item {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-start;
   border: 1px solid var(--border);
-  padding: 14px;
+  padding: 10px;
   background: var(--white);
-  border-radius: 8px;
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background: var(--accent-light);
   display: grid;
   place-items: center;
-  border-radius: 8px;
-  flex-shrink: 0;
 }
 
-.icon svg { 
-  width: 20px; 
-  height: 20px; 
-  color: var(--accent-dark); 
-}
+.icon svg { width: 18px; height: 18px; color: var(--accent-dark); }
 
+/* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: 6px;
+  padding: 10px 14px;
   background: var(--accent);
   color: #fff;
   border: none;
   cursor: pointer;
   font-weight: 600;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.2s ease;
+}
+.btn:hover { background: var(--accent-dark); }
+
+/* ---------- Arrival Photos ---------- */
+.arrival-photos {
+  margin: 16px 0;
 }
 
-.btn:hover { 
-  background: var(--accent-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+.photo-card {
+  border: 1px solid var(--border);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-ul { 
-  list-style: disc; 
-  margin-left: 20px; 
+.photo-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
+.photo-card .caption {
+  padding: 6px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ---------- Accordion ---------- */
+.accordion { display: grid; gap: 8px; }
+.acc-item { border: 1px solid var(--border); background: var(--white); }
+.acc-head {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.acc-head:hover { background: var(--accent-light); }
+.acc-content {
+  display: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #333;
+}
+.acc-item.open .acc-content { display: block; }
+
+/* ---------- Form ---------- */
+form {
+  display: grid;
+  gap: 12px;
+}
+label span {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+input, select, textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 10px;
+  font: inherit;
+  background: var(--white);
+}
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ---------- Lists ---------- */
+ul { list-style: disc; margin-left: 20px; }
+
+/* ---------- Footer ---------- */
 .footer {
-  margin-top: 60px;
-  padding: 24px 0;
+  margin-top: 40px;
+  padding: 20px 0;
   border-top: 1px solid var(--border);
   font-size: 14px;
-  color: #666;
+  color: #444;
   text-align: center;
+}
+
+/* ---------- Local Tips Cards ---------- */
+.tips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+@media (min-width: 800px) {
+  .tips-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.tip-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tip-card i {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: var(--accent-dark);
+}
+
+.tip-content h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-family: 'Playfair Display', serif;
+}
+
+.tip-content p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.tip-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tip-content li a {
+  display: block;
+  padding: 4px 0;
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+.tip-content li a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Villa Guide Enhancements ---------- */
+.guide-hero {
+  width: 100%;
+  height: auto;
+  margin: 12px 0 16px;
+  border: 1px solid var(--border);
+}
+
+.quick-tips {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  margin-bottom: 20px;
+}
+@media (min-width: 600px) {
+  .quick-tips { grid-template-columns: repeat(3, 1fr); }
+}
+
+.quick-tips .tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.quick-tips i {
+  color: var(--accent-dark);
+  width: 18px;
+  height: 18px;
+}
+
+.guide-photo {
+  width: 100%;
+  max-width: 240px;
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-light);
+  color: var(--text);
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.guide-link:hover {
+  background: var(--accent);
+  color: #fff;
 }
