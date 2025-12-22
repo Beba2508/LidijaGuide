@@ -1,37 +1,80 @@
 /* =========================================
-   Majestic Villa Lidija – script.js
-   Tabs, Accordions, Form, and UX logic
+   Villa Guide - Improved JavaScript
+   All interactive features
    ========================================= */
 
-// Run when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  // Render Lucide icons
+  // Initialize Lucide icons
   lucide.createIcons();
 
-  /* ---------- Tabs Logic ---------- */
+  /* ========================================= */
+  /* HAMBURGER MENU */
+  /* ========================================= */
+  const menuToggle = document.getElementById('menuToggle');
+  const mainNav = document.getElementById('mainNav');
+  const navClose = document.getElementById('navClose');
+
+  // Open menu
+  menuToggle?.addEventListener('click', () => {
+    mainNav.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Mark as seen (stop pulsing animation)
+    menuToggle.classList.add('seen');
+    localStorage.setItem('menuSeen', 'true');
+  });
+
+  // Close menu via X button
+  navClose?.addEventListener('click', () => {
+    mainNav.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  // Close menu when clicking outside
+  mainNav?.addEventListener('click', (e) => {
+    if (e.target === mainNav) {
+      mainNav.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Check if user has seen menu before
+  if (localStorage.getItem('menuSeen')) {
+    menuToggle?.classList.add('seen');
+  }
+
+  /* ========================================= */
+  /* TABS NAVIGATION */
+  /* ========================================= */
   const tabs = document.querySelectorAll(".tab-btn");
   const panels = document.querySelectorAll(".tab-panel");
 
   function activateTab(targetId) {
+    // Update panels
     panels.forEach((panel) => {
       const active = panel.id === targetId;
       panel.classList.toggle("active", active);
       panel.setAttribute("aria-hidden", !active);
     });
 
+    // Update tabs
     tabs.forEach((tab) => {
       const selected = tab.dataset.tab === targetId;
       tab.setAttribute("aria-selected", selected);
     });
 
-    // Scroll to main content (useful for mobile)
-    const y =
-      document.querySelector("main").getBoundingClientRect().top +
-      window.scrollY -
-      12;
+    // Close mobile menu if open
+    if (window.innerWidth <= 768) {
+      mainNav.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Scroll to main content
+    const y = document.querySelector("main").getBoundingClientRect().top + window.scrollY - 12;
     window.scrollTo({ top: y, behavior: "smooth" });
   }
 
+  // Tab click events
   tabs.forEach((btn) => {
     btn.addEventListener("click", () => activateTab(btn.dataset.tab));
     btn.addEventListener("keydown", (e) => {
@@ -42,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Allow jump links to open a tab
+  // Jump links (from Quick Start cards, Help popup, etc.)
   document.querySelectorAll("[data-jump]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.preventDefault();
@@ -51,7 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ---------- Accordion Logic ---------- */
+  /* ========================================= */
+  /* ACCORDION */
+  /* ========================================= */
   document.querySelectorAll(".acc-head").forEach((head) => {
     head.addEventListener("click", () => {
       const item = head.closest(".acc-item");
@@ -59,8 +104,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ---------- Add-ons Form ---------- */
+  /* ========================================= */
+  /* SCROLL HINT */
+  /* ========================================= */
+  const scrollHint = document.getElementById('scrollHint');
+  
+  // Hide scroll hint after user scrolls
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100 && scrollHint) {
+      scrollHint.classList.add('hidden');
+    }
+  }, { once: true });
+
+  /* ========================================= */
+  /* FLOATING HELP BUTTON */
+  /* ========================================= */
+  const floatingHelp = document.getElementById('floatingHelp');
+  const helpPopup = document.getElementById('helpPopup');
+  const helpClose = document.getElementById('helpClose');
+
+  // Open help popup
+  floatingHelp?.addEventListener('click', () => {
+    helpPopup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    lucide.createIcons(); // Refresh icons in popup
+  });
+
+  // Close help popup via X button
+  helpClose?.addEventListener('click', () => {
+    helpPopup.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  // Close help popup when clicking outside
+  helpPopup?.addEventListener('click', (e) => {
+    if (e.target === helpPopup) {
+      helpPopup.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  /* ========================================= */
+  /* ADD-ONS FORM */
+  /* ========================================= */
   const form = document.getElementById("addonsForm");
+  
   if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -80,13 +168,25 @@ ${data.get("notes") || ""}`
     });
   }
 
-  /* ---------- Dynamic Footer Year ---------- */
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  /* ========================================= */
+  /* HEADER SHADOW ON SCROLL */
+  /* ========================================= */
+  const header = document.querySelector(".header");
+  
+  const toggleHeaderShadow = () => {
+    if (!header) return;
+    header.classList.toggle("shadow", window.scrollY > 12);
+  };
+  
+  toggleHeaderShadow();
+  window.addEventListener("scroll", toggleHeaderShadow, { passive: true });
 
-  /* ---------- Mobile Horizontal Tab Scroll (with fades & hint) ---------- */
+  /* ========================================= */
+  /* MOBILE TAB SCROLLING (HORIZONTAL) */
+  /* ========================================= */
   const tabContainer = document.querySelector(".tabs");
-  if (tabContainer) {
+  
+  if (tabContainer && window.innerWidth > 768) {
     const updateTabShadows = () => {
       const maxScroll = tabContainer.scrollWidth - tabContainer.clientWidth;
       const scrolled = tabContainer.scrollLeft > 2;
@@ -101,7 +201,9 @@ ${data.get("notes") || ""}`
     window.addEventListener("resize", updateTabShadows);
   }
 
-  /* ---------- Language Switch (JSON-based) ---------- */
+  /* ========================================= */
+  /* LANGUAGE SWITCH */
+  /* ========================================= */
   async function setLanguage(lang) {
     try {
       const res = await fetch(`lang-${lang}.json`);
@@ -129,12 +231,36 @@ ${data.get("notes") || ""}`
   // Load saved language or default English
   setLanguage(localStorage.getItem("villaLang") || "en");
 
-  /* ---------- Header shadow on scroll ---------- */
-  const header = document.querySelector(".header");
-  const toggleHeaderShadow = () => {
-    if (!header) return;
-    header.classList.toggle("shadow", window.scrollY > 12);
-  };
-  toggleHeaderShadow();
-  window.addEventListener("scroll", toggleHeaderShadow, { passive: true });
+  /* ========================================= */
+  /* DYNAMIC FOOTER YEAR */
+  /* ========================================= */
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ========================================= */
+  /* ACCESSIBILITY: ESC KEY TO CLOSE MODALS */
+  /* ========================================= */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      // Close mobile menu
+      if (mainNav?.classList.contains('active')) {
+        mainNav.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      // Close help popup
+      if (helpPopup?.classList.contains('active')) {
+        helpPopup.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  /* ========================================= */
+  /* CONSOLE MESSAGE */
+  /* ========================================= */
+  console.log('🏡 Villa Guide loaded successfully!');
+  console.log('📱 Mobile-optimized with hamburger menu');
+  console.log('✨ Quick Start cards ready');
+  console.log('🆘 Floating Help button active');
 });
