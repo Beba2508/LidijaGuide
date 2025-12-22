@@ -1,46 +1,59 @@
 /* =========================================
    Villa Guide - Improved JavaScript
-   All interactive features
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize Lucide icons
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 
   /* ========================================= */
-  /* HAMBURGER MENU */
+  /* HAMBURGER MENU - FIX */
   /* ========================================= */
   const menuToggle = document.getElementById('menuToggle');
   const mainNav = document.getElementById('mainNav');
   const navClose = document.getElementById('navClose');
 
   // Open menu
-  menuToggle?.addEventListener('click', () => {
-    mainNav.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    // Mark as seen (stop pulsing animation)
-    menuToggle.classList.add('seen');
-    localStorage.setItem('menuSeen', 'true');
-  });
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Menu toggle clicked!'); // Debug
+      mainNav.classList.add('active');
+      // DON'T lock body scroll - that's the problem!
+      // document.body.style.overflow = 'hidden'; // <- Remove this
+      
+      // Mark as seen
+      menuToggle.classList.add('seen');
+      localStorage.setItem('menuSeen', 'true');
+    });
+  }
 
   // Close menu via X button
-  navClose?.addEventListener('click', () => {
-    mainNav.classList.remove('active');
-    document.body.style.overflow = '';
-  });
-
-  // Close menu when clicking outside
-  mainNav?.addEventListener('click', (e) => {
-    if (e.target === mainNav) {
+  if (navClose && mainNav) {
+    navClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Nav close clicked!'); // Debug
       mainNav.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
+      // document.body.style.overflow = ''; // <- Remove this
+    });
+  }
+
+  // Close menu when clicking backdrop
+  if (mainNav) {
+    mainNav.addEventListener('click', (e) => {
+      if (e.target === mainNav) {
+        console.log('Backdrop clicked!'); // Debug
+        mainNav.classList.remove('active');
+        // document.body.style.overflow = ''; // <- Remove this
+      }
+    });
+  }
 
   // Check if user has seen menu before
-  if (localStorage.getItem('menuSeen')) {
-    menuToggle?.classList.add('seen');
+  if (menuToggle && localStorage.getItem('menuSeen')) {
+    menuToggle.classList.add('seen');
   }
 
   /* ========================================= */
@@ -50,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const panels = document.querySelectorAll(".tab-panel");
 
   function activateTab(targetId) {
+    console.log('Activating tab:', targetId); // Debug
+    
     // Update panels
     panels.forEach((panel) => {
       const active = panel.id === targetId;
@@ -64,28 +79,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Close mobile menu if open
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 768 && mainNav) {
       mainNav.classList.remove('active');
-      document.body.style.overflow = '';
+      // document.body.style.overflow = ''; // <- Remove this
     }
 
     // Scroll to main content
-    const y = document.querySelector("main").getBoundingClientRect().top + window.scrollY - 12;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    const mainEl = document.querySelector("main");
+    if (mainEl) {
+      const y = mainEl.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   }
 
   // Tab click events
   tabs.forEach((btn) => {
-    btn.addEventListener("click", () => activateTab(btn.dataset.tab));
-    btn.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        activateTab(btn.dataset.tab);
-      }
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      activateTab(btn.dataset.tab);
     });
   });
 
-  // Jump links (from Quick Start cards, Help popup, etc.)
+  // Jump links
   document.querySelectorAll("[data-jump]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.preventDefault();
@@ -109,12 +124,13 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ========================================= */
   const scrollHint = document.getElementById('scrollHint');
   
-  // Hide scroll hint after user scrolls
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100 && scrollHint) {
-      scrollHint.classList.add('hidden');
-    }
-  }, { once: true });
+  if (scrollHint) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        scrollHint.classList.add('hidden');
+      }
+    }, { once: true });
+  }
 
   /* ========================================= */
   /* FLOATING HELP BUTTON */
@@ -124,28 +140,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpClose = document.getElementById('helpClose');
 
   // Open help popup
-  floatingHelp?.addEventListener('click', () => {
-    helpPopup.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    lucide.createIcons(); // Refresh icons in popup
-  });
+  if (floatingHelp && helpPopup) {
+    floatingHelp.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Help button clicked!'); // Debug
+      helpPopup.classList.add('active');
+      // DON'T lock scroll here either
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  }
 
-  // Close help popup via X button
-  helpClose?.addEventListener('click', () => {
-    helpPopup.classList.remove('active');
-    document.body.style.overflow = '';
-  });
-
-  // Close help popup when clicking outside
-  helpPopup?.addEventListener('click', (e) => {
-    if (e.target === helpPopup) {
+  // Close help popup
+  if (helpClose && helpPopup) {
+    helpClose.addEventListener('click', (e) => {
+      e.preventDefault();
       helpPopup.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
+    });
+  }
+
+  // Close on backdrop click
+  if (helpPopup) {
+    helpPopup.addEventListener('click', (e) => {
+      if (e.target === helpPopup) {
+        helpPopup.classList.remove('active');
+      }
+    });
+  }
 
   /* ========================================= */
-  /* ADD-ONS FORM */
+  /* FORM */
   /* ========================================= */
   const form = document.getElementById("addonsForm");
   
@@ -169,37 +194,18 @@ ${data.get("notes") || ""}`
   }
 
   /* ========================================= */
-  /* HEADER SHADOW ON SCROLL */
+  /* HEADER SHADOW */
   /* ========================================= */
   const header = document.querySelector(".header");
   
   const toggleHeaderShadow = () => {
-    if (!header) return;
-    header.classList.toggle("shadow", window.scrollY > 12);
+    if (header) {
+      header.classList.toggle("shadow", window.scrollY > 12);
+    }
   };
   
   toggleHeaderShadow();
   window.addEventListener("scroll", toggleHeaderShadow, { passive: true });
-
-  /* ========================================= */
-  /* MOBILE TAB SCROLLING (HORIZONTAL) */
-  /* ========================================= */
-  const tabContainer = document.querySelector(".tabs");
-  
-  if (tabContainer && window.innerWidth > 768) {
-    const updateTabShadows = () => {
-      const maxScroll = tabContainer.scrollWidth - tabContainer.clientWidth;
-      const scrolled = tabContainer.scrollLeft > 2;
-      const atEnd = tabContainer.scrollLeft >= maxScroll - 2;
-
-      tabContainer.classList.toggle("is-scrolled", scrolled);
-      tabContainer.classList.toggle("is-end", atEnd);
-    };
-
-    requestAnimationFrame(updateTabShadows);
-    tabContainer.addEventListener("scroll", updateTabShadows, { passive: true });
-    window.addEventListener("resize", updateTabShadows);
-  }
 
   /* ========================================= */
   /* LANGUAGE SWITCH */
@@ -228,39 +234,28 @@ ${data.get("notes") || ""}`
     btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
   });
 
-  // Load saved language or default English
+  // Load saved language
   setLanguage(localStorage.getItem("villaLang") || "en");
 
   /* ========================================= */
-  /* DYNAMIC FOOTER YEAR */
+  /* FOOTER YEAR */
   /* ========================================= */
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* ========================================= */
-  /* ACCESSIBILITY: ESC KEY TO CLOSE MODALS */
+  /* ESC KEY */
   /* ========================================= */
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      // Close mobile menu
-      if (mainNav?.classList.contains('active')) {
+      if (mainNav && mainNav.classList.contains('active')) {
         mainNav.classList.remove('active');
-        document.body.style.overflow = '';
       }
-      
-      // Close help popup
-      if (helpPopup?.classList.contains('active')) {
+      if (helpPopup && helpPopup.classList.contains('active')) {
         helpPopup.classList.remove('active');
-        document.body.style.overflow = '';
       }
     }
   });
 
-  /* ========================================= */
-  /* CONSOLE MESSAGE */
-  /* ========================================= */
-  console.log('🏡 Villa Guide loaded successfully!');
-  console.log('📱 Mobile-optimized with hamburger menu');
-  console.log('✨ Quick Start cards ready');
-  console.log('🆘 Floating Help button active');
+  console.log('✅ Villa Guide loaded!');
 });
