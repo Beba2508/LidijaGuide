@@ -358,18 +358,18 @@ a:hover { color: var(--accent); }
   }
 }
 
-/* ---------- Hero Section with GLASSMORPHISM ---------- */
+/* ---------- Hero Section - ELEGANT CLEAN DESIGN ---------- */
 .hero {
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(500px, 65vh, 750px); /* Taller for impact */
+  min-height: clamp(500px, 65vh, 750px);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg); /* Rounded corners */
-  margin: 24px 0 40px; /* More spacing */
-  width: calc(100vw - 48px); /* Slight padding on sides */
+  border-radius: var(--radius-lg);
+  margin: 24px 0 40px;
+  width: calc(100vw - 48px);
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
@@ -399,55 +399,49 @@ a:hover { color: var(--accent); }
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 100%);
+  background: linear-gradient(
+    to bottom, 
+    rgba(0,0,0,0.2) 0%, 
+    rgba(0,0,0,0.5) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 32px;
 }
 
-/* GLASSMORPHISM EFFECT */
+/* CLEAN CENTERED CONTENT - NO BLUR */
 .hero-content {
   position: relative;
   text-align: center;
   color: #fff;
-  padding: 48px 40px;
+  padding: 0;
   max-width: 900px;
-  
-  /* Glassmorphism */
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-lg);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 768px) {
   .hero-content {
-    padding: 32px 24px;
+    padding: 0 16px;
   }
 }
 
 .hero-title {
   font-size: clamp(32px, 6vw, 62px);
-  font-weight: 400; /* Light for elegance */
+  font-weight: 400;
   line-height: 1.15;
   letter-spacing: 1px;
   margin-bottom: 16px;
-  text-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
 .hero-sub { 
   opacity: 0.95; 
   font-size: clamp(16px, 2.5vw, 22px);
   font-weight: 300;
-  letter-spacing: 2px; /* Wide spacing for luxury */
+  letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 48px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
 }
 
 /* Scroll Hint */
@@ -460,7 +454,7 @@ a:hover { color: var(--accent); }
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
   animation: bounce 2.5s ease-in-out infinite;
   transition: opacity 0.3s;
   margin-top: 24px;
