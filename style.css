@@ -1,20 +1,17 @@
 /* =========================================
-   Majestic Villa Lidija – style.css
-   Mobile-first, flat & minimal design
+   Villa Guide - Improved Mobile-First CSS
    ========================================= */
 
-/* ---------- Root Palette ---------- */
 :root {
   --background: #f5f3ef;
   --text: #1a1a1a;
-  --accent: #a8b9a2;      /* Sage */
+  --accent: #a8b9a2;
   --accent-light: #c5d1c0;
   --accent-dark: #7d8e77;
   --border: #e5e5dc;
   --white: #ffffff;
 }
 
-/* ---------- Base ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body {
@@ -32,7 +29,6 @@ h1, h2, h3 {
   color: var(--text);
   margin-bottom: 0.5rem;
 }
-/* dodatni razmak za sekcijske naslove */
 h2 {
   margin-top: 20px;
   margin-bottom: 16px;
@@ -45,7 +41,6 @@ a {
 }
 a:hover { color: var(--accent); }
 
-/* ---------- Containers ---------- */
 .container {
   width: 100%;
   max-width: 1100px;
@@ -53,118 +48,155 @@ a:hover { color: var(--accent); }
   padding-left: 20px;
   padding-right: 20px;
 }
-/* ---------- Header ---------- */
+
+/* ========================================= */
+/* HEADER & NAVIGATION */
+/* ========================================= */
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
   background: var(--background);
   border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
 }
+
+.header.shadow {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: rgba(245, 243, 239, 0.95);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+
 .header-inner {
+  padding: 12px 0;
+}
+
+.header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0 12px; /* top, bottom spacing */
-  flex-wrap: wrap;
-  gap: 12px; /* adds subtle space between logo/brand and navigation */
+  margin-bottom: 12px;
 }
+
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .brand img {
   height: 32px;
   width: auto;
 }
+
 .brand-name {
   font-weight: 700;
   letter-spacing: 0.3px;
-   margin-top: 2px;
-
+  margin-top: 2px;
 }
-/* ---------- Tabs Navigation ---------- */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Language Switch */
+.lang-switch {
+  display: flex;
+  gap: 4px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.lang-btn:hover {
+  background: var(--accent-light);
+}
+
+/* Hamburger Menu Toggle */
+.menu-toggle {
+  display: none;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+
+.menu-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.menu-toggle i {
+  width: 20px;
+  height: 20px;
+}
+
+.menu-label {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Pulsing animation for first visit */
+.menu-toggle:not(.seen) {
+  animation: pulse-hint 2s ease-in-out 3;
+  animation-delay: 0.5s;
+}
+
+@keyframes pulse-hint {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 6px rgba(168, 185, 162, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(168, 185, 162, 0.7), 0 0 0 10px rgba(168, 185, 162, 0);
+  }
+}
+
+/* Tabs Navigation */
 .tabs {
   display: flex;
   gap: 4px;
   overflow-x: auto;
-  white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  position: relative; /* omogućuje pseudo-elemente ::before/::after */
-
-  padding-bottom: 14px;
+  padding-bottom: 8px;
 }
+
 .tabs::-webkit-scrollbar {
   display: none;
 }
-/* Desni fade koji sugerira da ima još tabova udesno */
-.tabs::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 44px;
-  height: 100%;
-  pointer-events: none;
-  background: linear-gradient(to left, var(--background) 60%, transparent);
-  opacity: 1;
-  transition: opacity 0.2s ease;
-}
-/* Na desktopu ne treba hint */
-@media (min-width: 801px) {
-  .tabs::after { display: none; }
-}
-/* Početni scroll hint: "Swipe →" koji nestane, postavljen ispod tabova */
-.tabs::before {
-  content: "Swipe →";
-  position: absolute;
-  right: 12px;
-  bottom: 6px;        /* bilo: top: 50% */
-  transform: none;    /* više ne centriramo po Y osi */
-  font-size: 12px;
-  padding: 4px 8px;
-  background: rgba(0,0,0,0.08);
-  color: #333;
-  border-radius: 12px;
-  pointer-events: none;
-  opacity: 1;
-  animation: nudgeOut 1.6s ease-out 1 forwards; /* brže nestajanje */
-}
 
-@keyframes nudgeOut {
-  0%   { transform: translateY(-50%) translateX(0);   opacity: 1; }
-  20%  { transform: translateY(-50%) translateX(8px); opacity: 1; }
-  40%  { transform: translateY(-50%) translateX(0);   opacity: 1; }
-  80%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-/* Kad korisnik malo skrola, klasa .is-scrolled preusmjerava ::before u lijevi fade */
-.tabs.is-scrolled::before {
-  content: "";
-  left: 0;
-  right: auto;
-  top: 0;
-  transform: none;
-  width: 44px;
-  height: 100%;
-  background: linear-gradient(to right, var(--background) 60%, transparent);
-  border-radius: 0;
-  padding: 0;
-  animation: none;
-  opacity: 1;
-}
-
-/* Kad smo do kraja desno, ugasi desni fade */
-.tabs.is-end::after {
-  opacity: 0;
+.nav-close {
+  display: none;
 }
 
 .tab-btn {
-  flex: 0 0 auto; /* Prevent wrapping */
+  flex: 0 0 auto;
   appearance: none;
   background: var(--white);
   border: 1px solid var(--border);
@@ -177,42 +209,114 @@ a:hover { color: var(--accent); }
   gap: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  scroll-snap-align: start;
-}
-.tab-btn span {
   white-space: nowrap;
 }
-.tab-btn:hover { border-color: var(--accent-light); color: var(--accent-dark); }
+
+.tab-btn:hover { 
+  border-color: var(--accent-light); 
+  color: var(--accent-dark); 
+}
+
 .tab-btn[aria-selected="true"] {
   background: var(--accent);
   color: #fff;
-  border-color: transparent;
+  border-color: var(--accent);
 }
-/* ---------- Hero Section ---------- */
+
+.tab-btn i {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========================================= */
+/* MOBILE STYLES */
+/* ========================================= */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .tabs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background);
+    flex-direction: column;
+    padding: 80px 20px 20px;
+    gap: 8px;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+
+  .tabs.active {
+    transform: translateX(0);
+  }
+
+  .nav-close {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--accent);
+    border: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .nav-close i {
+    width: 24px;
+    height: 24px;
+  }
+
+  .tab-btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  .tab-btn i {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ========================================= */
+/* HERO SECTION */
+/* ========================================= */
 .hero {
   position: relative;
   overflow: hidden;
   display: grid;
-    min-height: clamp(360px, 45vh, 560px);
+  min-height: clamp(360px, 45vh, 560px);
   border: 1px solid var(--border);
   margin: 16px 0 24px;
-}
-/* Hero panorama effect – full width while content stays centered */
-.hero {
-  width: 100vw; /* full screen width */
-  margin-left: calc(-50vw + 50%); /* centers it */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   border-left: none;
   border-right: none;
 }
+
 .hero img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center; /* centriraj sliku unutar okvira */
-
+  object-position: center center;
 }
+
 .hero-overlay {
   position: relative;
   z-index: 2;
@@ -222,12 +326,54 @@ a:hover { color: var(--accent); }
   color: #fff;
   padding: 24px;
 }
+
 .hero-title {
   font-size: clamp(26px, 5vw, 42px);
   line-height: 1.1;
 }
-.hero-sub { opacity: 0.9; max-width: 700px; }
-/* ---------- Content Padding (below Hero) ---------- */
+
+.hero-sub { 
+  opacity: 0.9; 
+  max-width: 700px; 
+}
+
+/* Scroll Hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  animation: bounce 2s ease-in-out infinite;
+  z-index: 3;
+  transition: opacity 0.3s;
+}
+
+.scroll-hint i {
+  width: 24px;
+  height: 24px;
+}
+
+.scroll-hint.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* ========================================= */
+/* MAIN CONTENT */
+/* ========================================= */
 main {
   padding: 60px 60px 40px;
   max-width: 1200px;
@@ -236,373 +382,344 @@ main {
 
 @media (max-width: 800px) {
   main {
-    padding: 24px 20px;
+    padding: 24px 20px 100px; /* Extra bottom padding for floating button */
   }
 }
 
-
-/* ---------- Main & Tabs ---------- */
 .tab-panel {
   display: none;
   animation: fade 0.3s ease;
 }
-.tab-panel.active { display: block; }
+
+.tab-panel.active { 
+  display: block; 
+}
 
 @keyframes fade {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
 }
 
-/* ---------- Cards & Grids ---------- */
-.card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 16px;
-}
-/* ---------- Arrival Info Spacing ---------- */
-.card h3 {
-  margin-top: 24px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* ========================================= */
+/* QUICK START SECTION */
+/* ========================================= */
+.quick-start {
+  background: linear-gradient(135deg, var(--accent-light) 0%, #d4dfd0 100%);
+  padding: 24px;
+  border-radius: 12px;
+  margin: 24px 0 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.card ul {
-  margin-bottom: 20px;
+.quick-start h3 {
+  margin: 0 0 18px;
+  color: var(--text);
+  font-size: 20px;
 }
 
-.map-embed {
-  margin: 16px 0 24px;
-  border: 1px solid var(--border);
-  height: 250px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.arrival-tip {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  background: var(--accent-light);
-  color: #333;
-  padding: 12px;
-  font-size: 14px;
-  margin-top: 24px;
-  border: 1px solid var(--accent);
-}
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-@media (min-width: 800px) {
-  .grid-2 { grid-template-columns: 1fr 1fr; }
-}
-
-/* ---------- Icon Rows ---------- */
-.icon-row {
+.quick-cards {
   display: grid;
   gap: 12px;
   grid-template-columns: 1fr;
 }
-.item {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  border: 1px solid var(--border);
-  padding: 10px;
-  background: var(--white);
-}
-.icon {
-  width: 36px;
-  height: 36px;
-  background: var(--accent-light);
-  display: grid;
-  place-items: center;
-}
-.icon svg { width: 18px; height: 18px; color: var(--accent-dark); }
 
-/* ---------- Buttons ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s ease;
-}
-.btn:hover { background: var(--accent-dark); }
-
-/* ---------- Arrival Photos ---------- */
-.arrival-photos {
-  margin: 16px 0;
-}
-.photo-card {
-  border: 1px solid var(--border);
-  background: var(--white);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.photo-card img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-.photo-card .caption {
-  padding: 6px;
-  font-size: 14px;
-  color: #444;
-}
-
-/* ---------- Accordion ---------- */
-.accordion { display: grid; gap: 8px; }
-.acc-item { border: 1px solid var(--border); background: var(--white); }
-.acc-head {
-  width: 100%;
-  text-align: left;
-  padding: 10px 12px;
-  font-weight: 600;
-  background: var(--white);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.acc-head:hover { background: var(--accent-light); }
-.acc-content {
-  display: none;
-  padding: 10px 12px;
-  font-size: 14px;
-  color: #333;
-}
-.acc-item.open .acc-content { display: block; }
-
-/* ---------- Form ---------- */
-form {
-  display: grid;
-  gap: 12px;
-}
-label span {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-input, select, textarea {
-  width: 100%;
-  border: 1px solid var(--border);
-  padding: 10px;
-  font: inherit;
-  background: var(--white);
-}
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-/* ---------- Lists ---------- */
-ul { list-style: disc; margin-left: 20px; }
-
-/* ---------- Footer ---------- */
-.footer {
-  margin-top: 40px;
-  padding: 20px 0;
-  border-top: 1px solid var(--border);
-  font-size: 14px;
-  color: #444;
-  text-align: center;
-}
-/* ---------- Local Tips Cards ---------- */
-.tips-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 16px;
-}
-
-@media (min-width: 800px) {
-  .tips-grid {
+@media (min-width: 600px) {
+  .quick-cards {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-.tip-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+.quick-card {
+  background: white;
+  border: none;
   padding: 16px;
+  border-radius: 10px;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  /* no border-radius = sharp look */
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-.tip-card i {
+.quick-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.quick-card i {
+  width: 36px;
+  height: 36px;
+  color: var(--accent-dark);
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  color: var(--accent-dark);
 }
 
-.tip-content h3 {
-  margin: 0 0 4px;
+.quick-card strong {
+  display: block;
   font-size: 16px;
-  font-family: 'Playfair Display', serif;
-}
-
-.tip-content p {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 6px;
-}
-
-.tip-content ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.tip-content li a {
-  display: block;
-  padding: 4px 0;
-  font-weight: 500;
-  color: var(--accent-dark);
-}
-
-.tip-content li a:hover {
-  color: var(--accent);
-}
-/* ---------- Villa Guide Enhancements ---------- */
-.guide-hero {
-  width: 100%;
-  height: auto;
-  margin: 12px 0 16px;
-  border: 1px solid var(--border);
-}
-
-.quick-tips {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: 1fr;
-  margin-bottom: 20px;
-}
-@media (min-width: 600px) {
-  .quick-tips { grid-template-columns: repeat(3, 1fr); }
-}
-.quick-tips .tip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 8px 10px;
-  font-size: 14px;
-}
-.quick-tips i {
-  color: var(--accent-dark);
-  width: 18px;
-  height: 18px;
-}
-
-.guide-photo {
-  width: 100%;
-  max-width: 240px;
-  border: 1px solid var(--border);
-  margin-bottom: 8px;
-  display: block;
-}
-
-.guide-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--accent-light);
+  margin-bottom: 4px;
   color: var(--text);
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  font-size: 14px;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.guide-link:hover {
-  background: var(--accent);
-  color: #fff;
-}
-/* ---------- Arrival Info Enhancements ---------- */
-.map-embed {
-  border: 1px solid var(--border);
-  margin: 10px 0 20px;
-  width: 100%;
-  height: 240px;
-}
-.map-embed iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
+  font-weight: 700;
 }
 
-.arrival-tip {
+.quick-card span {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  font-weight: 400;
+}
+
+/* ========================================= */
+/* FLOATING HELP BUTTON */
+/* ========================================= */
+.floating-help {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--accent-dark);
+  color: white;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 50px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  background: var(--accent-light);
-  border: 1px solid var(--border);
-  padding: 10px 12px;
-  margin-top: 20px;
-  color: var(--text);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  z-index: 1000;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.3s;
+  animation: float-bounce 3s ease-in-out infinite;
 }
-.arrival-tip i {
+
+.floating-help:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  background: var(--accent);
+}
+
+@keyframes float-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating-help i {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 480px) {
+  .floating-help {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 18px;
+  }
+  
+  .floating-help span {
+    display: none;
+  }
+  
+  .floating-help {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    justify-content: center;
+    padding: 0;
+  }
+}
+
+/* ========================================= */
+/* HELP POPUP */
+/* ========================================= */
+.help-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.help-popup.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.help-content {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px 24px;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.help-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--background);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.help-close:hover {
+  background: var(--accent-light);
+}
+
+.help-close i {
   width: 20px;
   height: 20px;
+}
+
+.help-content h3 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+.help-options {
+  display: grid;
+  gap: 12px;
+}
+
+.help-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--background);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.help-option:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.help-option i {
+  width: 32px;
+  height: 32px;
   color: var(--accent-dark);
   flex-shrink: 0;
 }
-.arrival-tip p {
-  margin: 0;
-  font-size: 14px;
+
+.help-option strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
-#tab-arrival h3 {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.help-option span {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  font-weight: 400;
 }
-#tab-arrival h3 i {
-  width: 18px;
-  height: 18px;
-  color: var(--accent-dark);
-}
-.lang-switch {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.lang-btn {
-  background: transparent;
+
+/* ========================================= */
+/* OTHER COMPONENTS */
+/* ========================================= */
+.card {
+  background: var(--white);
   border: 1px solid var(--border);
-  color: var(--text);
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  padding: 20px;
+  margin-bottom: 20px;
 }
-.lang-btn.active {
+
+.icon-row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+  margin-top: 24px;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  padding: 14px;
+  background: var(--white);
+  border-radius: 8px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent-light);
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.icon svg { 
+  width: 20px; 
+  height: 20px; 
+  color: var(--accent-dark); 
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
   background: var(--accent);
   color: #fff;
-}
-.lang-btn:hover {
-  background: var(--accent-light);
-}
-/* Sjena headera na scroll */
-.header.shadow {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  background: rgba(245, 243, 239, 0.95);
-  backdrop-filter: saturate(1.2) blur(6px);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+.btn:hover { 
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
+ul { 
+  list-style: disc; 
+  margin-left: 20px; 
+}
+
+.footer {
+  margin-top: 60px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
