@@ -1,4 +1,13 @@
 {
+  "navWelcome": "Welcome",
+  "navArrival": "Arrival Info",
+  "navAbout": "About Villa",
+  "navGuide": "Villa Guide",
+  "navAddons": "Add-ons",
+  "navLocal": "Local Tips",
+  "navContact": "Contact",
+  "navDeparture": "Departure",
+  
   "welcomeTitle": "Welcome to Majestic Villa Lidija by Irundo",
   "welcomeText": "We love to have you as our guest! Relax and enjoy your stay at Majestic Villa Lidija - your private Dubrovnik retreat.",
   "checkinLabel": "Check-in:",
