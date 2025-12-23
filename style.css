@@ -1339,7 +1339,7 @@ li {
   font-size: 14px;
   color: var(--text-primary);
 }
-/* Weather Widget */
+/* Weather Widget - Clean version */
 .weather-widget {
   margin: var(--space-xl) 0;
   padding: var(--space-lg);
@@ -1361,10 +1361,10 @@ li {
   color: var(--accent);
 }
 
-.weather-widget iframe {
-  width: 100%;
-  border: var(--border-width) solid var(--border);
-  border-radius: 0;
+.weatherwidget-io {
+  width: 100% !important;
+  display: block;
+  border: var(--border-width) solid var(--border) !important;
 }
 /* Walking Distance Guide */
 .walking-guide {
