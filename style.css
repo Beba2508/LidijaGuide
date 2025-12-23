@@ -1339,3 +1339,102 @@ li {
   font-size: 14px;
   color: var(--text-primary);
 }
+/* Weather Widget */
+.weather-widget {
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  background: var(--bg-secondary);
+  border: var(--border-width) solid var(--border);
+}
+
+.weather-widget h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-md) 0;
+  font-size: 20px;
+}
+
+.weather-widget h3 i {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+}
+
+.weather-widget iframe {
+  width: 100%;
+  border: var(--border-width) solid var(--border);
+  border-radius: 0;
+}
+/* Walking Distance Guide */
+.walking-guide {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .walking-guide {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.walk-item {
+  background: var(--bg-primary);
+  border: var(--border-width) solid var(--border);
+  padding: var(--space-md);
+}
+
+.walk-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: var(--space-sm);
+  border: var(--border-width) solid;
+}
+
+.walk-badge.walk-5 {
+  background: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.walk-badge.walk-10 {
+  background: #fff3cd;
+  color: #856404;
+  border-color: #ffeaa7;
+}
+
+.walk-badge.walk-15 {
+  background: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.walk-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.walk-item li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 0;
+  font-size: 14px;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.walk-item li:last-child {
+  border-bottom: none;
+}
+
+.walk-item i {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
