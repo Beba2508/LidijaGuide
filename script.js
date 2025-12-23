@@ -1,261 +1,262 @@
 /* =========================================
-   Villa Guide - Improved JavaScript
+   Majestic Villa Lidija – script.js
+   Hamburger Menu, Tabs, Accordion & More
    ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize Lucide icons
-  if (typeof lucide !== 'undefined') {
+document.addEventListener('DOMContentLoaded', () => {
+  // Render Lucide icons
+  lucide.createIcons();
+
+  /* ---------- Hamburger Menu Logic ---------- */
+  const hamburger = document.querySelector('.hamburger');
+  const mobileNav = document.querySelector('.mobile-nav');
+  const mobileNavClose = document.querySelector('.mobile-nav-close');
+  const body = document.body;
+
+  // Create overlay element
+  const overlay = document.createElement('div');
+  overlay.className = 'mobile-nav-overlay';
+  body.appendChild(overlay);
+
+  function openMobileNav() {
+    mobileNav.classList.add('open');
+    overlay.classList.add('visible');
+    hamburger.classList.add('active');
+    body.style.overflow = 'hidden';
+  }
+
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    overlay.classList.remove('visible');
+    hamburger.classList.remove('active');
+    body.style.overflow = '';
+  }
+
+  if (hamburger) {
+    hamburger.addEventListener('click', openMobileNav);
+  }
+
+  if (mobileNavClose) {
+    mobileNavClose.addEventListener('click', closeMobileNav);
+  }
+
+  overlay.addEventListener('click', closeMobileNav);
+
+  // Close mobile nav on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+      closeMobileNav();
+    }
+  });
+
+  /* ---------- Tab Navigation Logic ---------- */
+  const tabButtons = document.querySelectorAll('.tab-btn, .nav-item');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  function activateTab(targetId) {
+    // Hide all panels
+    tabPanels.forEach(panel => {
+      panel.classList.remove('active');
+      panel.setAttribute('aria-hidden', 'true');
+    });
+
+    // Show target panel
+    const targetPanel = document.getElementById(targetId);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+      targetPanel.setAttribute('aria-hidden', 'false');
+    }
+
+    // Update button states (desktop)
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      const isActive = btn.dataset.tab === targetId;
+      btn.setAttribute('aria-selected', isActive);
+    });
+
+    // Update nav item states (mobile)
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.tab === targetId);
+    });
+
+    // Close mobile nav if open
+    closeMobileNav();
+
+    // Scroll to top of main content
+    const mainElement = document.querySelector('main');
+    if (mainElement) {
+      const offset = mainElement.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+
+    // Re-render icons for newly visible content
     lucide.createIcons();
   }
 
-  /* ========================================= */
-  /* HAMBURGER MENU - FIX */
-  /* ========================================= */
-  const menuToggle = document.getElementById('menuToggle');
-  const mainNav = document.getElementById('mainNav');
-  const navClose = document.getElementById('navClose');
+  // Add click handlers to all tab buttons
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.dataset.tab;
+      if (targetTab) {
+        activateTab(targetTab);
+      }
+    });
 
-  // Open menu
-  if (menuToggle && mainNav) {
-    menuToggle.addEventListener('click', (e) => {
+    // Keyboard navigation
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const targetTab = btn.dataset.tab;
+        if (targetTab) {
+          activateTab(targetTab);
+        }
+      }
+    });
+  });
+
+  /* ---------- Accordion Logic ---------- */
+  const accordionHeaders = document.querySelectorAll('.acc-header');
+
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.acc-item');
+      const wasOpen = item.classList.contains('open');
+
+      // Close all items in this accordion
+      const accordion = item.closest('.accordion');
+      if (accordion) {
+        accordion.querySelectorAll('.acc-item').forEach(accItem => {
+          accItem.classList.remove('open');
+        });
+      }
+
+      // Toggle current item
+      if (!wasOpen) {
+        item.classList.add('open');
+        // Re-render icons when accordion opens
+        setTimeout(() => lucide.createIcons(), 100);
+      }
+    });
+  });
+
+  /* ---------- Form Submission ---------- */
+  const addonsForm = document.getElementById('addonsForm');
+  
+  if (addonsForm) {
+    addonsForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      console.log('Menu toggle clicked!'); // Debug
-      mainNav.classList.add('active');
-      // DON'T lock body scroll - that's the problem!
-      // document.body.style.overflow = 'hidden'; // <- Remove this
       
-      // Mark as seen
-      menuToggle.classList.add('seen');
-      localStorage.setItem('menuSeen', 'true');
-    });
-  }
+      const formData = new FormData(addonsForm);
+      const name = formData.get('name') || '';
+      const email = formData.get('email') || '';
+      const phone = formData.get('phone') || '';
+      const service = formData.get('service') || '';
+      const datetime = formData.get('datetime') || '';
+      const notes = formData.get('notes') || '';
 
-  // Close menu via X button
-  if (navClose && mainNav) {
-    navClose.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('Nav close clicked!'); // Debug
-      mainNav.classList.remove('active');
-      // document.body.style.overflow = ''; // <- Remove this
-    });
-  }
-
-  // Close menu when clicking backdrop
-  if (mainNav) {
-    mainNav.addEventListener('click', (e) => {
-      if (e.target === mainNav) {
-        console.log('Backdrop clicked!'); // Debug
-        mainNav.classList.remove('active');
-        // document.body.style.overflow = ''; // <- Remove this
-      }
-    });
-  }
-
-  // Check if user has seen menu before
-  if (menuToggle && localStorage.getItem('menuSeen')) {
-    menuToggle.classList.add('seen');
-  }
-
-  /* ========================================= */
-  /* TABS NAVIGATION */
-  /* ========================================= */
-  const tabs = document.querySelectorAll(".tab-btn");
-  const panels = document.querySelectorAll(".tab-panel");
-
-  function activateTab(targetId) {
-    console.log('Activating tab:', targetId); // Debug
-    
-    // Update panels
-    panels.forEach((panel) => {
-      const active = panel.id === targetId;
-      panel.classList.toggle("active", active);
-      panel.setAttribute("aria-hidden", !active);
-    });
-
-    // Update tabs
-    tabs.forEach((tab) => {
-      const selected = tab.dataset.tab === targetId;
-      tab.setAttribute("aria-selected", selected);
-    });
-
-    // Close mobile menu if open
-    if (window.innerWidth <= 768 && mainNav) {
-      mainNav.classList.remove('active');
-      // document.body.style.overflow = ''; // <- Remove this
-    }
-
-    // Scroll to main content
-    const mainEl = document.querySelector("main");
-    if (mainEl) {
-      const y = mainEl.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  }
-
-  // Tab click events
-  tabs.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      activateTab(btn.dataset.tab);
-    });
-  });
-
-  // Jump links
-  document.querySelectorAll("[data-jump]").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      e.preventDefault();
-      const id = el.getAttribute("data-jump");
-      activateTab(id);
-    });
-  });
-
-  /* ========================================= */
-  /* ACCORDION */
-  /* ========================================= */
-  document.querySelectorAll(".acc-head").forEach((head) => {
-    head.addEventListener("click", () => {
-      const item = head.closest(".acc-item");
-      item.classList.toggle("open");
-    });
-  });
-
-  /* ========================================= */
-  /* SCROLL HINT */
-  /* ========================================= */
-  const scrollHint = document.getElementById('scrollHint');
-  
-  if (scrollHint) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 100) {
-        scrollHint.classList.add('hidden');
-      }
-    }, { once: true });
-  }
-
-  /* ========================================= */
-  /* FLOATING HELP BUTTON */
-  /* ========================================= */
-  const floatingHelp = document.getElementById('floatingHelp');
-  const helpPopup = document.getElementById('helpPopup');
-  const helpClose = document.getElementById('helpClose');
-
-  // Open help popup
-  if (floatingHelp && helpPopup) {
-    floatingHelp.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('Help button clicked!'); // Debug
-      helpPopup.classList.add('active');
-      // DON'T lock scroll here either
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
-    });
-  }
-
-  // Close help popup
-  if (helpClose && helpPopup) {
-    helpClose.addEventListener('click', (e) => {
-      e.preventDefault();
-      helpPopup.classList.remove('active');
-    });
-  }
-
-  // Close on backdrop click
-  if (helpPopup) {
-    helpPopup.addEventListener('click', (e) => {
-      if (e.target === helpPopup) {
-        helpPopup.classList.remove('active');
-      }
-    });
-  }
-
-  /* ========================================= */
-  /* FORM */
-  /* ========================================= */
-  const form = document.getElementById("addonsForm");
-  
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
-      const subj = encodeURIComponent("Villa Lidija Add-on Request");
+      const subject = encodeURIComponent('Villa Lidija Add-on Request');
       const body = encodeURIComponent(
-        `Name: ${data.get("name") || ""}
-Email: ${data.get("email") || ""}
-Phone: ${data.get("phone") || ""}
-Service: ${data.get("service") || ""}
-Preferred Date/Time: ${data.get("datetime") || ""}
-
-Notes:
-${data.get("notes") || ""}`
+        `Name: ${name}\n` +
+        `Email: ${email}\n` +
+        `Phone: ${phone}\n` +
+        `Service: ${service}\n` +
+        `Preferred Date/Time: ${datetime}\n\n` +
+        `Notes:\n${notes}`
       );
-      window.location.href = `mailto:concierge@irundo.com?subject=${subj}&body=${body}`;
+
+      window.location.href = `mailto:concierge@irundo.com?subject=${subject}&body=${body}`;
     });
   }
 
-  /* ========================================= */
-  /* HEADER SHADOW */
-  /* ========================================= */
-  const header = document.querySelector(".header");
-  
-  const toggleHeaderShadow = () => {
-    if (header) {
-      header.classList.toggle("shadow", window.scrollY > 12);
-    }
-  };
-  
-  toggleHeaderShadow();
-  window.addEventListener("scroll", toggleHeaderShadow, { passive: true });
+  /* ---------- Language Switching ---------- */
+  const langButtons = document.querySelectorAll('.lang-btn');
 
-  /* ========================================= */
-  /* LANGUAGE SWITCH */
-  /* ========================================= */
   async function setLanguage(lang) {
     try {
-      const res = await fetch(`lang-${lang}.json`);
-      const translations = await res.json();
+      const response = await fetch(`lang-${lang}.json`);
+      if (!response.ok) throw new Error('Failed to load language file');
+      
+      const translations = await response.json();
 
-      document.querySelectorAll("[data-translate]").forEach((el) => {
+      // Update all elements with data-translate attribute
+      document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.dataset.translate;
-        if (translations[key]) el.innerHTML = translations[key];
+        if (translations[key]) {
+          el.innerHTML = translations[key];
+        }
       });
 
-      localStorage.setItem("villaLang", lang);
+      // Update active language button
+      langButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
 
-      document.querySelectorAll(".lang-btn").forEach((btn) =>
-        btn.classList.toggle("active", btn.dataset.lang === lang)
-      );
-    } catch (err) {
-      console.error("Translation load error:", err);
+      // Save language preference
+      localStorage.setItem('villaLang', lang);
+
+      // Re-render icons after language change
+      lucide.createIcons();
+
+    } catch (error) {
+      console.error('Language loading error:', error);
     }
   }
 
-  document.querySelectorAll(".lang-btn").forEach((btn) => {
-    btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+  // Add click handlers to language buttons
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setLanguage(btn.dataset.lang);
+    });
   });
 
-  // Load saved language
-  setLanguage(localStorage.getItem("villaLang") || "en");
+  // Load saved language or default to English
+  const savedLang = localStorage.getItem('villaLang') || 'en';
+  setLanguage(savedLang);
 
-  /* ========================================= */
-  /* FOOTER YEAR */
-  /* ========================================= */
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  /* ---------- Header Shadow on Scroll ---------- */
+  const header = document.querySelector('.header');
 
-  /* ========================================= */
-  /* ESC KEY */
-  /* ========================================= */
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (mainNav && mainNav.classList.contains('active')) {
-        mainNav.classList.remove('active');
+  function updateHeaderShadow() {
+    if (!header) return;
+    const shouldHaveShadow = window.scrollY > 20;
+    header.classList.toggle('shadow', shouldHaveShadow);
+  }
+
+  updateHeaderShadow();
+  window.addEventListener('scroll', updateHeaderShadow, { passive: true });
+
+  /* ---------- Dynamic Footer Year ---------- */
+  const yearElement = document.getElementById('year');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+
+  /* ---------- Smooth Scroll for Internal Links ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        const offset = 80;
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
       }
-      if (helpPopup && helpPopup.classList.contains('active')) {
-        helpPopup.classList.remove('active');
-      }
-    }
+    });
   });
 
-  console.log('✅ Villa Guide loaded!');
+  /* ---------- Initialize Icons After Everything Loads ---------- */
+  setTimeout(() => {
+    lucide.createIcons();
+  }, 100);
+
+  // Re-render icons on window resize (for responsive changes)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      lucide.createIcons();
+    }, 250);
+  }, { passive: true });
 });
