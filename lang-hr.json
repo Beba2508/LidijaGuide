@@ -1,4 +1,16 @@
 {
+  "navWelcome": "Dobrodošlica",
+  "navArrival": "Informacije o dolasku",
+  "navAbout": "O vili",
+  "navGuide": "Vodič kroz vilu",
+  "navAddons": "Dodatne usluge",
+  "navLocal": "Lokalni savjeti",
+  "navContact": "Kontakt",
+  "navDeparture": "Informacije o odlasku",
+  
+  "heroTitle": "Majestic Villa Lidija by Irundo",
+  "heroSubtitle": "Vaš digitalni vodič kroz luksuzni boravak",
+  
   "welcomeTitle": "Dobrodošli u Majestic Villu Lidiju by Irundo",
   "welcomeText": "Drago nam je što ste naš gost! Opustite se i uživajte u boravku u Majestic Villi Lidiji — vašem privatnom dubrovačkom utočištu.",
   "checkinLabel": "Prijava:",
@@ -105,6 +117,7 @@
   "emergencyEU": "Europski broj hitne pomoći: 112",
   "emergencyMedical": "Hitna medicinska pomoć Dubrovnik: +385 (0)20 431 600",
   "emergencyPolice": "Policija: 192",
+  "emergencyFire": "Vatrogasci",
 
   "departureTitle": "Informacije o odlasku",
   "departureIntro": "Prije odlaska, nekoliko podsjetnika za ugodan check-out.",
@@ -112,16 +125,12 @@
   "departure2": "Kontaktirajte domaćina dan ranije radi dogovora o odlasku",
   "departure3": "Skladištenje prtljage ili porter dostupni na upit",
 
-  "footerText": "Sva prava pridržana."
+  "footerText": "Sva prava pridržana.",
   "menuGuide": "Koristite izbornik iznad za pristup informacijama o dolasku, sadržajima vile, lokalnim preporukama i još mnogo toga.",
-  "weatherTitle": "Dubrovnik Vrijeme",
   "neighborhoodTitle": "Karta Susjedstva",
-"neighborhoodText": "Ključne lokacije dostupne pješice iz Ville Lidije.",
+  "neighborhoodText": "Ključne lokacije dostupne pješice iz Ville Lidije.",
   "nearbyEmergency": "Obližnje hitne službe",
-"hospitalTitle": "Opća bolnica Dubrovnik",
-"pharmacyTitle": "24h Ljekarna Gruž",
-"policeTitle": "Policijska postaja Dubrovnik",
-"emergencyFire": "Vatrogasci"
-  
-
+  "hospitalTitle": "Opća bolnica Dubrovnik",
+  "pharmacyTitle": "24h Ljekarna Gruž",
+  "policeTitle": "Policijska postaja Dubrovnik"
 }
