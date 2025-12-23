@@ -186,30 +186,6 @@
           </div>
         </div>
       </div>
-<!-- Weather Widget -->
-<div class="weather-widget">
-  <h3><i data-lucide="cloud-sun"></i> <span data-translate="weatherTitle">Dubrovnik Weather</span></h3>
-  <div id="openweathermap-widget-11"></div>
-  <script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-  <script>
-  window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
-  window.myWidgetParam.push({
-    id: 11,
-    cityid: '3201047',
-    appid: 'b1b15e88fa797225412429c1c50c122a1',
-    units: 'metric',
-    containerid: 'openweathermap-widget-11',
-  });
-  (function() {
-    var script = document.createElement('script');
-    script.async = true;
-    script.charset = "utf-8";
-    script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(script, s);
-  })();
-  </script>
-</div>
     </section>
 
     <!-- Arrival Info Tab -->
