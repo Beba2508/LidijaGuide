@@ -1315,3 +1315,27 @@ li {
 
 .mt-0 { margin-top: 0; }
 .mb-0 { margin-bottom: 0; }
+/* Info Banner */
+.info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--accent-light);
+  border: var(--border-width) solid var(--accent);
+  margin-bottom: var(--space-lg);
+}
+
+.info-banner i {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-hover);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-banner p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-primary);
+}
