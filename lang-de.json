@@ -121,6 +121,14 @@
   "departure1": "Check-out bis 10:00 Uhr",
   "departure2": "Kontaktieren Sie Ihren Gastgeber einen Tag vor der Abreise, um die Check-out-Zeit zu vereinbaren",
   "departure3": "Gepäckaufbewahrung oder Gepäckservice auf Anfrage verfügbar",
-
-  "footerText": "Alle Rechte vorbehalten."
+  "footerText": "Alle Rechte vorbehalten.",
+  "nearbyEmergency": "Notdienste in der Nähe",
+"hospitalTitle": "Allgemeines Krankenhaus Dubrovnik",
+"pharmacyTitle": "24h Apotheke Gruž",
+"policeTitle": "Polizeistation Dubrovnik",
+"emergencyFire": "Feuerwehr",
+  "neighborhoodTitle": "Nachbarschaftskarte",
+"neighborhoodText": "Wichtige Orte in Gehweite von Villa Lidija.",
+  "weatherTitle": "Dubrovnik Wetter"
+  
 }
