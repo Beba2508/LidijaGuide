@@ -189,9 +189,25 @@
 <!-- Weather Widget -->
 <div class="weather-widget">
   <h3><i data-lucide="cloud-sun"></i> <span data-translate="weatherTitle">Dubrovnik Weather</span></h3>
-  <a class="weatherwidget-io" href="https://forecast7.com/en/42d6418d11/dubrovnik/" data-label_1="DUBROVNIK" data-label_2="WEATHER" data-theme="pure" data-basecolor="rgba(168, 185, 162, 0.1)" data-accent="rgba(168, 185, 162, 1)" data-textcolor="#1a1a1a" data-highcolor="#1a1a1a" data-lowcolor="#666666" data-suncolor="#ffa500" data-mooncolor="#cccccc" data-cloudcolor="#d3d3d3" data-cloudfill="#f5f3ef" data-raincolor="#4a90e2" data-snowcolor="#ffffff">DUBROVNIK WEATHER</a>
+  <div id="openweathermap-widget-11"></div>
+  <script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
   <script>
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+  window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
+  window.myWidgetParam.push({
+    id: 11,
+    cityid: '3201047',
+    appid: 'b1b15e88fa797225412429c1c50c122a1',
+    units: 'metric',
+    containerid: 'openweathermap-widget-11',
+  });
+  (function() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.charset = "utf-8";
+    script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(script, s);
+  })();
   </script>
 </div>
     </section>
