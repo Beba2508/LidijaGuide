@@ -449,12 +449,16 @@ a:hover {
   font-weight: 700;
   margin-bottom: var(--space-sm);
   line-height: 1.1;
+  color: white;  /* ← dodaj ovu liniju */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);  /* ← dodaj ovu liniju za bolji kontrast */
 }
 
 .hero-sub {
   font-size: clamp(16px, 2vw, 20px);
   opacity: 0.95;
   font-weight: 300;
+   color: white;  /* ← dodaj ovu liniju */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);  /* ← dodaj ovu liniju */
 }
 
 /* ---------- Main Content ---------- */
