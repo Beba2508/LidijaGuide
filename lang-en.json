@@ -124,7 +124,7 @@
   "departure2": "Contact your host a day before departure to arrange check-out time",
   "departure3": "Luggage storage or porter service available on request",
 
-  "footerText": "All rights reserved."
+  "footerText": "All rights reserved.",
   "menuGuide": "Use the menu above to explore arrival info, villa amenities, local recommendations, and more.",
 "weatherTitle": "Dubrovnik Weather",
 "neighborhoodTitle": "Neighborhood Map",
@@ -133,5 +133,5 @@
 "hospitalTitle": "General Hospital Dubrovnik",
 "pharmacyTitle": "24h Pharmacy Gruž",
 "policeTitle": "Police Station Dubrovnik",
-"emergencyFire": "Fire Department",
+"emergencyFire": "Fire Department"
 }
